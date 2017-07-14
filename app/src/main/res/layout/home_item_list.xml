@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/item_home_avatar"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="120dp"
+        android:layout_height="100dp" />
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_home_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/item_home_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="xxxxxdetail"
+            android:textSize="10sp" />
+        <TextView
+            android:id="@+id/item_home_address"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="xxxxxaddress"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/item_home_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxprice"
+            android:textColor="#FF6633"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+</LinearLayout>
