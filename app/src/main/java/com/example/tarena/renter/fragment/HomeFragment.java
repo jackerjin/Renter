@@ -1,20 +1,18 @@
 package com.example.tarena.renter.fragment;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.example.tarena.renter.R;
 import com.example.tarena.renter.adapter.HomeAdapter;
 import com.example.tarena.renter.bean.NewHouse;
 import com.example.tarena.renter.util.HttpUtil;
+import com.example.tarena.renter.view.MylistView;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,7 +29,8 @@ import butterknife.ButterKnife;
  */
 public class HomeFragment extends Fragment {
 @BindView(R.id.listview_homeFragment)
-ListView listView;
+MylistView listView;
+
     List<NewHouse> datas;
     HomeAdapter adapter;
 
@@ -51,9 +50,11 @@ ListView listView;
         View listHeader = inflater.inflate(R.layout.inflate_home_item01, listView, false);
         listView.addHeaderView(listHeader);
         listView.setAdapter(adapter);
+
         return view;
 
     }
+
 
     @Override
     public void onResume() {
@@ -67,43 +68,50 @@ ListView listView;
             @Override
             public void onResponse(Document document) {
                 List<NewHouse> newHouses = new ArrayList<NewHouse>();
-                Elements elements = document.select("div[class=list-info]"  );//div class="list-info"
-                Log.i("TAG","elements"+elements);
-                NewHouse newHouse = new NewHouse();
+
+                Elements elements = document.select("ul[class=house-list-wrap] div[class]");//div class="list-info"
+                Log.i("TAG", "class=house-list-wrap"+elements);
                 for (Element element : elements) {
-//                    Element imgElement=
-
-
-
-
-
-
+                    NewHouse    newHouse = new NewHouse();
                     Elements titleElement=element.select("h2.title");
-                    Log.i("mytag", "titleElement:" + titleElement.text());
+                    Log.i("TAG", "titleElement "+titleElement.text());
                     newHouse.setTitle(titleElement.text());
+
                     Elements addressElement=element.select("p.baseinfo");
                      newHouse.setAddress(addressElement.text());
-                    Log.i("TAG", "newhouse"+elements.attr("div.title").toString());
-
-                }
-                Elements priceElements=document.select(" div[class=price]");
-                Log.i("TAG", "pricElemnts" + priceElements);
-                for (Element priceElement : priceElements) {
-                    Elements picElement =priceElement.select("p.sum");
-                    Log.i("mytag", "priceElement:" + priceElement.text());
+                    Elements picElement =element.select("p.sum");
                     newHouse.setPrice(picElement.text());
-//                    Elements perElemnt=priceElements.select("p.unit");
-//                    Log.i("mytag", "perElemnt:" + perElemnt.text());
-//                    newHouse.setPerPrice(perElemnt.text());
-                }
 
-                Elements imgElements = document.select("div[class=pic]");//class="pic"
-                for (Element imgElement : imgElements) {
+                    Elements imgElement = element.select("div[class=pic] img");
 
-                    Log.i("mytag", "imgElement1:" + imgElement.attr("data-src"));
                     newHouse.setAvatar(imgElement.attr("data-src"));
+                  newHouses.add(newHouse);
+
                 }
+//                Elements priceElements=document.select(" div[class=price] ");
+//                for (Element priceElement : priceElements) {
+////                    newHouse = new NewHouse();
+//                    Elements picElement =priceElement.select("p.sum");
+//                    Log.i("mytag", "priceElement:" + priceElement.text());
+//                    newHouse.setPrice(picElement.text());
+////                    Elements perElemnt=priceElements.select("p.unit");
+////                    Log.i("mytag", "perElemnt:" + perElemnt.text());
+////                    newHouse.setPerPrice(perElemnt.text());
+//                    newHouses.add(newHouse);
+//                    Log.i("mytag", "newHouses1:"+newHouses);
+//
+//                }
+//
+//                Elements imgElements = document.select("div[class=pic] img");//class="pic"
+//                for (Element imgElement : imgElements) {
+//                    newHouse = new NewHouse();
+//                    newHouse.setAvatar(imgElement.attr("data-src")+"");
+//                    newHouses.add(newHouse);
+//                    Log.i("mytag", "newHouses2:"+newHouses);
+//                }
+                //Log.i("TAG", "newhouse"+newHouses);
              adapter.addAll(newHouses,true);
+                Log.i("TAG", "newHouses"+newHouses);
             }
         });
     }
